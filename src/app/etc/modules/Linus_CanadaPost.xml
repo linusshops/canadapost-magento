@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Linus_CanadaPost>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Linus_CanadaPost>
+    </modules>
+</config>

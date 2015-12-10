@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Linus_CanadaPost>
+            <version>0.1.0</version>
+        </Linus_CanadaPost>
+    </modules>
+    <global>
+        <models>
+            <linus_canadapost>
+                <class>Linus_CanadaPost_Model</class>
+            </linus_canadapost>
+        </models>
+        <blocks>
+            <linus_canadapost>
+                <class>Linus_CanadaPost_Block</class>
+            </linus_canadapost>
+        </blocks>
+        <helpers>
+            <linus_canadapost>
+                <class>Linus_CanadaPost_Helper</class>
+            </linus_canadapost>
+        </helpers>
+        
+    </global>
+    
+    <frontend>
+        <routers>
+            <linus_canadapost>
+                <use>standard</use>
+                <args>
+                    <module>Linus_CanadaPost</module>
+                    <frontName>canadapost</frontName>
+                </args>
+            </linus_canadapost>
+        </routers>
+    </frontend>
+</config>
