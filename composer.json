@@ -35,7 +35,8 @@
   ],
   "require": {
     "magento-hackathon/magento-composer-installer": "*",
-    "linusshops/canadapost":"*"
+    "linusshops/canadapost":"*",
+    "linusshops/common":"*"
   },
   "extra":{
   }
