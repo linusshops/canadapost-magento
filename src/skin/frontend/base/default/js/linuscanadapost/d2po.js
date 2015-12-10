@@ -1,14 +1,10 @@
 var linus = linus || {};
 
-linus.d2po = linus.d2po || (function($){
+linus.d2po = linus.d2po || (function($)
+{
     'use strict';
 
-    function makeMap($target, options)
-    {
-        return new google.maps.Map($target[0], options);
-    }
-
-    function init(apiKey, callback)
+    function lazyInit(apiKey, onInitComplete)
     {
         $.when(
             $.ajax({
@@ -17,11 +13,32 @@ linus.d2po = linus.d2po || (function($){
                 cache: true,
                 crossDomain: true
             })
-        ).done(callback);
+        ).done(onInitComplete);
+    }
+
+    function buildMap($target)
+    {
+
+    }
+
+    function addMarker()
+    {
+
+    }
+
+    function getPostOfficeData()
+    {
+
+    }
+
+    function initMap(apiKey, $target)
+    {
+        lazyInit(apiKey, function(){
+            buildMap($target);
+        });
     }
 
     return {
-        init: init,
-        makeMap: makeMap
+        initMap: initMap
     };
 })(jQuery);
