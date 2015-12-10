@@ -1,0 +1,42 @@
+{
+  "name": "linusshops/magento-canadapost",
+  "description": "Provide helpers for the Canada Post API",
+  "version": "0.1.0",
+  "type": "magento-module",
+  "keywords": [
+    "magento",
+    "module",
+    "linus shops",
+    "canadas motorcycle",
+    "canada post"
+  ],
+  "homepage": "https://github.com/linusshops/canadapost",
+  "license": [
+    "MIT"
+  ],
+  "authors": [
+    {
+      "name": "Samuel Schmidt",
+      "email": "samuel@dersam.net",
+      "homepage": "http://dersam.net",
+      "role": "Web Developer"
+    },
+    {
+      "name": "Linus Shops Inc",
+      "email": "corporate@linusshops.com",
+      "homepage": "http://www.linusshops.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://packages.firegento.com"
+    }
+  ],
+  "require": {
+    "magento-hackathon/magento-composer-installer": "*",
+    "linusshops/canadpost":"*"
+  },
+  "extra":{
+  }
+}
