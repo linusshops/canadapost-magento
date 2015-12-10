@@ -35,4 +35,35 @@
             </linus_canadapost>
         </routers>
     </frontend>
+
+    <default>
+        <linus_canadapost>
+            <api>
+                <userid></userid>
+                <password></password>
+            </api>
+        </linus_canadapost>
+    </default>
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <linus_canadapost>
+                                            <title>LinusCanadaPost - All</title>
+                                        </linus_canadapost>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
 </config>
