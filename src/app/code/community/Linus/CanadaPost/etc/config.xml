@@ -48,6 +48,7 @@
             <api>
                 <userid></userid>
                 <password></password>
+                <endpointurl></endpointurl>
             </api>
             <maps>
                 <key></key>
