@@ -44,5 +44,6 @@ class Linus_CanadaPost_OfficeController extends Mage_Core_Controller_Front_Actio
             $province
         );
 
+        $common->sendResponseJson($offices);
     }
 }
