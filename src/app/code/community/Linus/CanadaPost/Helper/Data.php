@@ -9,15 +9,49 @@ use LinusShops\CanadaPost\ServiceFactory;
 class Linus_CanadaPost_Helper_Data extends Mage_Core_Helper_Abstract
 {
     /**
-     * @param $name
-     * @return Service
+     * @param $postalCode
+     * @param $city
+     * @param $province
+     * @return array
      */
-    public function getService($name)
+    public function getNearbyPostOffices($postalCode, $city, $province)
     {
-        return (new ServiceFactory(
+        $service = (new ServiceFactory(
             Mage::getStoreConfig('linus_canadapost/api/endpointurl'),
             Mage::getStoreConfig('linus_canadapost/api/userid'),
             Mage::getStoreConfig('linus_canadapost/api/password')
-        ))->getService($name);
+        ))->getService('GetNearestPostOffice');
+
+        $response = $service
+            ->setParameter('d2po', 'true')
+            ->setParameter('postalCode', $postalCode)
+            ->setParameter('city', $city)
+            ->setParameter('province', $province)
+            ->send()
+        ;
+
+        $document = new DOMDocument();
+        $document->loadXML($response->getBody());
+
+        $offices = array();
+
+        /** @var DOMNode $office */
+        foreach ($document->getElementsByTagName('post-office') as $office) {
+            $office = array('address'=>array());
+
+            foreach ($office as $node) {
+                if ($node->nodeName == 'address') {
+                    foreach ($node as $a) {
+                        $office['address'][$a->nodeName] = $a->nodeValue;
+                    }
+                } else {
+                    $office[$node->nodeName] = $node->nodeValue;
+                }
+            }
+
+            $offices[] = $office;
+        }
+
+        return $offices;
     }
 }

@@ -38,14 +38,11 @@ class Linus_CanadaPost_OfficeController extends Mage_Core_Controller_Front_Actio
             return;
         }
 
-        /** @var GetNearestPostOffice $service */
-        $service = Mage::helper('linus_canadapost')->getService('GetNearestPostOffice');
-        $offices = $service
-            ->setParameter('d2po', 'true')
-            ->setParameter('postalCode', $postalCode)
-            ->setParameter('city', $city)
-            ->setParameter('province', $province)
-            ->send()
-        ;
+        $offices = Mage::helper('linus_canadapost')->getNearbyPostOffices(
+            $postalCode,
+            $city,
+            $province
+        );
+
     }
 }
