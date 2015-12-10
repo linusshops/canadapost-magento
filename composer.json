@@ -1,5 +1,5 @@
 {
-  "name": "linusshops/magento-canadapost",
+  "name": "linusshops/canadapost-magento",
   "description": "Provide helpers for the Canada Post API",
   "version": "0.1.0",
   "type": "magento-module",
@@ -10,7 +10,7 @@
     "canadas motorcycle",
     "canada post"
   ],
-  "homepage": "https://github.com/linusshops/canadapost",
+  "homepage": "https://github.com/linusshops/canadapost-magento",
   "license": [
     "MIT"
   ],
@@ -35,7 +35,7 @@
   ],
   "require": {
     "magento-hackathon/magento-composer-installer": "*",
-    "linusshops/canadpost":"*"
+    "linusshops/canadapost":"*"
   },
   "extra":{
   }
