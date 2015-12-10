@@ -34,6 +34,13 @@
                 </args>
             </linus_canadapost>
         </routers>
+        <layout>
+            <updates>
+                <linus_canadapost module="Linus_CanadaPost">
+                    <file>linus_canadapost.xml</file>
+                </linus_canadapost>
+            </updates>
+        </layout>
     </frontend>
 
     <default>
