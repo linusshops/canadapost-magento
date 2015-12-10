@@ -49,6 +49,9 @@
                 <userid></userid>
                 <password></password>
             </api>
+            <maps>
+                <key></key>
+            </maps>
         </linus_canadapost>
     </default>
 

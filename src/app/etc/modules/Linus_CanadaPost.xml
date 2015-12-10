@@ -4,6 +4,9 @@
         <Linus_CanadaPost>
             <active>true</active>
             <codePool>community</codePool>
+            <depends>
+                <Linus_Common/>
+            </depends>
         </Linus_CanadaPost>
     </modules>
 </config>
