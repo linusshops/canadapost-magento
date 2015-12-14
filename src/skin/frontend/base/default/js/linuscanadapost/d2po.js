@@ -83,7 +83,8 @@ linus.d2po = linus.d2po || (function($)
     //Get the lat/long coordinates for the postal code
     function getPostalCodeCoordinates(postalCode)
     {
-
+        var geocoder = google.maps.Geocoder();
+        geocoder.geocode({address: postalCode});
     }
 
     function map(apiKey, $target, epicenter)
