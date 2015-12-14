@@ -18,6 +18,7 @@ class Linus_CanadaPost_OfficeController extends Mage_Core_Controller_Front_Actio
         $postalCode = $this->getRequest()->get('postal_code');
         $city = $this->getRequest()->get('city');
         $province = $this->getRequest()->get('province');
+        $max = $this->getRequest()->get('max');
 
         if (in_array(null, array($postalCode, $city, $province))) {
             $msg = '';
@@ -34,6 +35,10 @@ class Linus_CanadaPost_OfficeController extends Mage_Core_Controller_Front_Actio
                 $msg .= 'province ';
             }
 
+            if ($max = null) {
+                $max = 10;
+            }
+
             $common->sendResponseJson(array(), 'Missing required fields: '.$msg);
             return;
         }
@@ -41,7 +46,8 @@ class Linus_CanadaPost_OfficeController extends Mage_Core_Controller_Front_Actio
         $offices = Mage::helper('linus_canadapost')->getNearbyPostOffices(
             $postalCode,
             $city,
-            $province
+            $province,
+            $max
         );
 
         $common->sendResponseJson($offices);

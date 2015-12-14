@@ -14,7 +14,7 @@ class Linus_CanadaPost_Helper_Data extends Mage_Core_Helper_Abstract
      * @param $province
      * @return array
      */
-    public function getNearbyPostOffices($postalCode, $city, $province)
+    public function getNearbyPostOffices($postalCode, $city, $province, $max =10)
     {
         $service = (new ServiceFactory(
             Mage::getStoreConfig('linus_canadapost/api/endpointurl'),
@@ -27,6 +27,7 @@ class Linus_CanadaPost_Helper_Data extends Mage_Core_Helper_Abstract
             ->setParameter('postalCode', $postalCode)
             ->setParameter('city', $city)
             ->setParameter('province', $province)
+            ->setParameter('maximum', $max)
             ->send()
         ;
 
