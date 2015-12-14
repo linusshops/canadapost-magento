@@ -35,7 +35,7 @@ class Linus_CanadaPost_OfficeController extends Mage_Core_Controller_Front_Actio
                 $msg .= 'province ';
             }
 
-            if ($max = null) {
+            if ($max == null) {
                 $max = 10;
             }
 
