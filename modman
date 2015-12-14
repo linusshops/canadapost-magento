@@ -2,6 +2,7 @@
 src/app/code/community/Linus/CanadaPost app/code/community/Linus/CanadaPost
 
 src/app/design/frontend/base/default/layout/linus_canadapost.xml  app/design/frontend/base/default/layout/linus_canadapost.xml
+src/app/design/frontend/base/default/template/linuscanadapost  app/design/frontend/base/default/template/linuscanadapost
 src/app/etc/modules/Linus_CanadaPost.xml  app/etc/modules/Linus_CanadaPost.xml
 
 src/skin/frontend/base/default/js/linuscanadapost  skin/frontend/base/default/js/linuscanadapost
