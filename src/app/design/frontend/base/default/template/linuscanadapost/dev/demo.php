@@ -7,4 +7,6 @@
  * @company Linus Shops
  */
 ?>
-Hello world!
+
+<input type="button" id="demo-map" value="go go go"/>
+<div id="map" style="height:500px;"></div>

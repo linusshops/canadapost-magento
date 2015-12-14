@@ -1,11 +1,15 @@
 var linus = linus || {};
+linus.canadapost = linus.canadapost || {};
 
-linus.d2po = linus.d2po || (function($)
+linus.canadapost.d2po = linus.canadapost.d2po || (function($)
 {
     'use strict';
 
     var loaded = false;
     var apiKey = null;
+    var lastPostCoordinates = {};
+
+    var gmapsTimer = null;
 
     function setApiKey(key)
     {
@@ -29,7 +33,7 @@ linus.d2po = linus.d2po || (function($)
         if (!loaded) {
             promise = $.when(
                 $.ajax({
-                    url: "https://maps.googleapis.com/maps/api/js?key=" + getApiKey() + "&callback=initMap",
+                    url: "https://maps.googleapis.com/maps/api/js?key=" + getApiKey(),
                     dataType: 'script',
                     cache: true,
                     crossDomain: true
@@ -44,60 +48,63 @@ linus.d2po = linus.d2po || (function($)
         return promise;
     }
 
-    function makeMap($target, epicenter)
-    {
-        getPostOfficeData(
-            epicenter.postalCode,
-            epicenter.city,
-            epicenter.province
-        ).done(function(response){
-            var offices = response.payload;
-            getPostalCodeCoordinates(epicenter.postalCode)
-                .done(function(response){
-                    markOffices(
-                        createMap($target, center),
-                        offices
-                    );
-                });
-        })
-    }
-
-    function createMap($target, center)
-    {
-
-    }
-
-    function markOffices(map, offices)
-    {
-
-    }
-
     function getPostOfficeData(postalCode, city, province)
     {
-        $.ajax('/canadapost/office/nearest?postal_code='+postalCode+'&city='+city+'&province='+province, {
+        return $.ajax('/canadapost/office/nearest?postal_code='+postalCode+'&city='+city+'&province='+province, {
             method: 'GET',
             dataType: 'json'
         });
     }
 
     //Get the lat/long coordinates for the postal code
-    function getPostalCodeCoordinates(postalCode)
+    function getPostalCodeCoordinates(postalCode, callback)
     {
-        var geocoder = google.maps.Geocoder();
-        geocoder.geocode({address: postalCode});
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({address: postalCode}, callback);
     }
 
-    function map(apiKey, $target, epicenter)
+    function clearLastPostCoordinates()
+    {
+        lastPostCoordinates = {};
+    }
+
+    function renderMap(postalCode)
+    {
+        getPostalCodeCoordinates(postalCode, function(results, status){
+            if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: results[0].geometry.location,
+                    zoom: 12
+                });
+            }
+        });
+    }
+
+    function initMap(apiKey, $target, epicenter)
     {
         setApiKey(apiKey);
+        clearLastPostCoordinates();
+        console.log(getPostOfficeData);
+        getPostOfficeData(
+            epicenter.postalCode,
+            epicenter.city,
+            epicenter.province
+        ).done(function(response) {
+            lastPostCoordinates = response.payload;
+        });
 
         lazyLoadGoogleMapsLibrary()
-            .then(function(){
-                makeMap($target, epicenter);
+            .then(function () {
+                gmapsTimer = setTimeout(function(){
+                    if (typeof google.maps.Geocoder != 'undefined') {
+                        clearTimeout(gmapsTimer);
+                        renderMap(epicenter.postalCode);
+                    }
+                }, 250);
             });
     }
 
     return {
-        map: map
+        initMap: initMap
     };
 })(jQuery);
