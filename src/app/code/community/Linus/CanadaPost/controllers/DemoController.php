@@ -10,7 +10,7 @@
  * @since 2015-12-14
  * @company Linus Shops
  */
-class Linus_CanadaPost_SampleController extends Mage_Core_Controller_Front_Action
+class Linus_CanadaPost_DemoController extends Mage_Core_Controller_Front_Action
 {
     function indexAction()
     {
@@ -20,7 +20,7 @@ class Linus_CanadaPost_SampleController extends Mage_Core_Controller_Front_Actio
         }
 
         $block = new Mage_Core_Block_Template();
-        $block->setTemplate('linuscanadapost/dev/sample.php');
+        $block->setTemplate('linuscanadapost/dev/demo.php');
 
         $this->getResponse()->setBody($block->toHtml());
     }
