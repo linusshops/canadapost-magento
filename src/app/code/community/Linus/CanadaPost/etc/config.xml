@@ -26,19 +26,19 @@
     
     <frontend>
         <routers>
-            <linus_canadapost>
+            <canadapost>
                 <use>standard</use>
                 <args>
                     <module>Linus_CanadaPost</module>
                     <frontName>canadapost</frontName>
                 </args>
-            </linus_canadapost>
+            </canadapost>
         </routers>
         <layout>
             <updates>
-                <linus_canadapost module="Linus_CanadaPost">
+                <canadapost module="Linus_CanadaPost">
                     <file>linus_canadapost.xml</file>
-                </linus_canadapost>
+                </canadapost>
             </updates>
         </layout>
     </frontend>

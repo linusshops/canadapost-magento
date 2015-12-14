@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <linus_canadapost_js>
+        <reference name="root">
+            <reference name="head">
+                <action method="addItem">
+                    <type>skin_js</type>
+                    <name>js/linuscanadapost/d2po.js</name>
+                </action>
+            </reference>
+        </reference>
+    </linus_canadapost_js>
+
+    <canadapost_demo_index>
+        <update handle="linus_canadapost_js"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block
+                    type="core/template"
+                    name="demo_maps"
+                    template="linuscanadapost/dev/demo.php"
+                >
+            </block>
+        </reference>
+    </canadapost_demo_index>
+</layout>
