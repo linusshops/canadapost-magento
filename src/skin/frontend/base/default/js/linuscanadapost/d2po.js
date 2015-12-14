@@ -44,7 +44,25 @@ linus.d2po = linus.d2po || (function($)
         return promise;
     }
 
-    function buildMap($target)
+    function makeMap($target, epicenter)
+    {
+        getPostOfficeData(
+            epicenter.postalCode,
+            epicenter.city,
+            epicenter.province
+        ).done(function(response){
+            var offices = response.payload;
+            getPostalCodeCoordinates(epicenter.postalCode)
+                .done(function(response){
+                    markOffices(
+                        createMap($target, center),
+                        offices
+                    );
+                });
+        })
+    }
+
+    function createMap($target, center)
     {
 
     }
@@ -62,28 +80,20 @@ linus.d2po = linus.d2po || (function($)
         });
     }
 
+    //Get the lat/long coordinates for the postal code
+    function getPostalCodeCoordinates(postalCode)
+    {
+
+    }
+
     function map(apiKey, $target, epicenter)
     {
         setApiKey(apiKey);
 
         lazyLoadGoogleMapsLibrary()
             .then(function(){
-                return getPostOfficeData(
-                    epicenter.postalCode,
-                    epicenter.city,
-                    epicenter.province
-                );
-            })
-            .then(function(response){
-                return {
-                    offices: response.payload,
-                    map: buildMap($target)
-                };
-            })
-            .then(function(params){
-                markOffices(params.map, params.offices);
-            })
-        ;
+                makeMap($target, epicenter);
+            });
     }
 
     return {
