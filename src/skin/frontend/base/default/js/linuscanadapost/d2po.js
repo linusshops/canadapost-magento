@@ -17,7 +17,7 @@ linus.d2po = linus.d2po || (function($)
         return apiKey;
     }
 
-    function lazyInit()
+    function lazyLoadGoogleMapsLibrary()
     {
         if (getApiKey() == null) {
             throw Exception('No GMaps Api key provided. Terminating.');
@@ -25,6 +25,7 @@ linus.d2po = linus.d2po || (function($)
 
         var promise = null;
 
+        //Make sure we only load the GMaps library once.
         if (!loaded) {
             promise = $.when(
                 $.ajax({
@@ -48,7 +49,7 @@ linus.d2po = linus.d2po || (function($)
 
     }
 
-    function addMarker()
+    function markOffices(map, offices)
     {
 
     }
@@ -65,7 +66,7 @@ linus.d2po = linus.d2po || (function($)
     {
         setApiKey(apiKey);
 
-        lazyInit()
+        lazyLoadGoogleMapsLibrary()
             .then(function(){
                 return getPostOfficeData(
                     epicenter.postalCode,
@@ -73,6 +74,16 @@ linus.d2po = linus.d2po || (function($)
                     epicenter.province
                 );
             })
+            .then(function(response){
+                return {
+                    offices: response.payload,
+                    map: buildMap($target)
+                };
+            })
+            .then(function(params){
+                markOffices(params.map, params.offices);
+            })
+        ;
     }
 
     return {
