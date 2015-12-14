@@ -68,11 +68,11 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($)
         lastPostCoordinates = {};
     }
 
-    function renderMap(postalCode)
+    function renderMap(postalCode, $target)
     {
         getPostalCodeCoordinates(postalCode, function(results, status){
             if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
-                var map = new google.maps.Map(document.getElementById('map'), {
+                var map = new google.maps.Map($target[0], {
                     center: results[0].geometry.location,
                     zoom: 12
                 });
@@ -82,9 +82,9 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($)
 
     function initMap(apiKey, $target, epicenter)
     {
+        console.log($target);
         setApiKey(apiKey);
         clearLastPostCoordinates();
-        console.log(getPostOfficeData);
         getPostOfficeData(
             epicenter.postalCode,
             epicenter.city,
@@ -98,7 +98,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($)
                 gmapsTimer = setTimeout(function(){
                     if (typeof google.maps.Geocoder != 'undefined') {
                         clearTimeout(gmapsTimer);
-                        renderMap(epicenter.postalCode);
+                        console.log($target);
+                        renderMap(epicenter.postalCode, $target);
                     }
                 }, 250);
             });
