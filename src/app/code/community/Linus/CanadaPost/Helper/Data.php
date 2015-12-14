@@ -37,19 +37,19 @@ class Linus_CanadaPost_Helper_Data extends Mage_Core_Helper_Abstract
 
         /** @var DOMNode $office */
         foreach ($document->getElementsByTagName('post-office') as $office) {
-            $office = array('address'=>array());
+            $parsed = array('address'=>array());
 
-            foreach ($office as $node) {
+            foreach ($office->childNodes as $node) {
                 if ($node->nodeName == 'address') {
-                    foreach ($node as $a) {
-                        $office['address'][$a->nodeName] = $a->nodeValue;
+                    foreach ($node->childNodes as $a) {
+                        $parsed['address'][$a->nodeName] = $a->nodeValue;
                     }
                 } else {
-                    $office[$node->nodeName] = $node->nodeValue;
+                    $parsed[$node->nodeName] = $node->nodeValue;
                 }
             }
 
-            $offices[] = $office;
+            $offices[] = $parsed;
         }
 
         return $offices;
