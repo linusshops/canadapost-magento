@@ -115,8 +115,10 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
     /**
      * Wrap map creation (if not already created) and adding markers
      */
-    function render($target, epicenter, apiKey)
+    function render(target, epicenter, apiKey)
     {
+        var $target = $(target);
+
         if (typeof apiKey == 'undefined' || apiKey == null) {
            apiKey = linus.common.getCspData('gmaps_api_key');
         }
