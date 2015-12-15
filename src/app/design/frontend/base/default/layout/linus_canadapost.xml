@@ -9,6 +9,14 @@
                 </action>
             </reference>
         </reference>
+        <reference name="content">
+            <block
+                    type="core/template"
+                    name="canadapost_config"
+                    template="linuscanadapost/cspconfig.php"
+            >
+            </block>
+        </reference>
     </linus_canadapost_js>
 
     <canadapost_demo_index>
@@ -23,12 +31,6 @@
             </reference>
         </reference>
         <reference name="content">
-            <block
-                    type="core/template"
-                    name="canadapost_config"
-                    template="linuscanadapost/cspconfig.php"
-            >
-            </block>
             <block
                     type="core/template"
                     name="demo_maps"
