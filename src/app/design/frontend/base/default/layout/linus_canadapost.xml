@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <linus_canadapost_js>
+    <linus_canadapost_d2po>
         <reference name="root">
             <reference name="head">
                 <action method="addItem">
@@ -17,10 +17,10 @@
             >
             </block>
         </reference>
-    </linus_canadapost_js>
+    </linus_canadapost_d2po>
 
     <canadapost_demo_index>
-        <update handle="linus_canadapost_js"/>
+        <update handle="linus_canadapost_d2po"/>
         <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
             <reference name="head">
