@@ -7,12 +7,9 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($)
 
     var loaded = false;
     var apiKey = null;
-
     var map;
 
-    var lastPostCoordinates = {};
-
-    var gmapsTimer = null;
+    var markers = [];
 
     function setApiKey(key)
     {
@@ -81,11 +78,42 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($)
             });
     }
 
-    function loadMarkers(epicenter)
+    function displayOfficeMarkers(epicenter)
     {
         getPostOfficeData(epicenter).done(function(response){
-            
+            $.each(response.payload, function(index, office){
+                var location = new google.maps.LatLng(
+                    office.address.latitude,
+                    office.address.longitude
+                );
+
+                var marker = new google.maps.Marker({
+                    position: location,
+                    title: office.name,
+                    map: map,
+                    animation: google.maps.Animation.DROP
+                });
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: office.name + '<br/>' + office.address['office-address']
+                });
+
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
+
+                markers.push(marker);
+            });
         });
+    }
+
+    function clearOfficeMarkers()
+    {
+        $.each(markers, function(index, marker){
+            marker.setMap(null);
+        });
+
+        markers.length = 0;
     }
 
     /**
@@ -97,11 +125,13 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($)
 
         $.when(createMap($target, epicenter))
             .then(function(){
-                loadMarkers(epicenter);
+                displayOfficeMarkers(epicenter);
             });
     }
 
     return {
+        displayOfficeMarkers: displayOfficeMarkers,
+        clearOfficeMarkers: clearOfficeMarkers,
         render: render
     };
 })(jQuery);
