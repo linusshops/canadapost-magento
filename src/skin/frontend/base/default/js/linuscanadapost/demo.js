@@ -8,9 +8,9 @@ jQuery(document).ready( function() {
 
     var $map = jQuery('#map');
 
-    $map.on('onOfficeMarkerClick', function(event, id){
+    $map.on('onOfficeMarkerClick', function(event, office){
         console.log(event);
-        console.log('office id: '+id);
+        console.log(office);
     });
 
     $map.on('onOfficesLoaded', function(event, offices){

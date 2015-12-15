@@ -124,7 +124,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
 
                 marker.addListener('click', function() {
                     infowindow.open(map, marker);
-                    $mapDiv.trigger('onOfficeMarkerClick', [office['office-id']]);
+                    $mapDiv.trigger('onOfficeMarkerClick', [office]);
                 });
 
                 markers.push(marker);
