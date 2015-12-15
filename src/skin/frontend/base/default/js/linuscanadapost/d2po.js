@@ -120,12 +120,12 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
                 markerBounds.extend(location);
 
                 var content = '<div class="canadapost marker">' +
-                    '<span class="office-info">' +
-                    office.name +
-                    '<br/>' + office.address['office-address'] +
-                    '<br/>' + office.address.city  +
-                    ', ' + office.address['postal-code'] +
-                    '</span></div>'
+                    '<span class="office-name">'+office.name + '</span>' +
+                    '<br/><span class="office-address">' + office.address['office-address']+ '</span>' +
+                    '<br/><span class="office-city">' + office.address.city+ '</span>'  +
+                    ', <span class="office-province">' + office.address.province+ '</span>'  +
+                    ' <span class="office-postal">' + office.address['postal-code']+ '</span>' +
+                    '</div>'
                 ;
 
                 var infowindow = new google.maps.InfoWindow({
