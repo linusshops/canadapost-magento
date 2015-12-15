@@ -85,6 +85,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
 
             $mapDiv.trigger('onOfficesLoaded', [response.payload]);
 
+            var markerBounds = new google.maps.LatLngBounds();
+
             $.each(response.payload, function(index, office){
                 var location = new google.maps.LatLng(
                     office.address.latitude,
@@ -98,6 +100,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
                     animation: google.maps.Animation.DROP
                 });
 
+                markerBounds.extend(location);
+
                 var infowindow = new google.maps.InfoWindow({
                     content: office.name + '<br/>' + office.address['office-address']
                 });
@@ -109,6 +113,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
 
                 markers.push(marker);
             });
+
+            map.fitBounds(markerBounds);
         });
     }
 
