@@ -3,16 +3,17 @@ use LinusShops\CanadaPost\Service;
 use LinusShops\CanadaPost\ServiceFactory;
 
 /**
- * Helper
+ * Provide helper access to Canada Post Api
  *
  */
 class Linus_CanadaPost_Helper_Data extends Mage_Core_Helper_Abstract
 {
     /**
+     * Get post offices near a given location.
      * @param $postalCode
      * @param $city
      * @param $province
-     * @return array
+     * @return array list of post offices and their locations
      */
     public function getNearbyPostOffices($postalCode, $city, $province, $max =10)
     {
