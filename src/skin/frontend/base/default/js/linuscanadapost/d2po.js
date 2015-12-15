@@ -70,8 +70,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
                 getPostalCodeCoordinates(epicenter.postalCode, function(results, status){
                     if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                         map = new google.maps.Map($target[0], {
-                            center: results[0].geometry.location,
-                            zoom: 12
+                            center: results[0].geometry.location
                         });
                     }
                 });
