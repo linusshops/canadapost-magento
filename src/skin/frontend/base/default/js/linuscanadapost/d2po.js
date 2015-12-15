@@ -49,6 +49,11 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
         return promise;
     }
 
+    /**
+     * Load the office location data from Canada Post
+     * @param epicenter
+     * @returns {*}
+     */
     function getPostOfficeData(epicenter)
     {
         return $.ajax('/canadapost/office/nearest?postal_code='+epicenter.postalCode+'&city='+epicenter.city+'&province='+epicenter.province, {
@@ -64,6 +69,12 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
         geocoder.geocode({address: postalCode}, callback);
     }
 
+    /**
+     * Load the google maps library, then center on the give area code
+     * @param $target
+     * @param epicenter
+     * @returns {*}
+     */
     function createMap($target, epicenter)
     {
         return lazyLoadGoogleMapsLibrary()
@@ -78,6 +89,10 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
             });
     }
 
+    /**
+     * Load the post office data from Canada Post, and inject it as map markers.
+     * @param epicenter
+     */
     function displayOfficeMarkers(epicenter)
     {
         getPostOfficeData(epicenter).done(function(response){
@@ -119,6 +134,12 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
         });
     }
 
+    /**
+     * Zoom and center on a specific location, generally to show an office
+     * at a sane default zoom level.
+     * @param latitude
+     * @param longitude
+     */
     function recenterAndZoom(latitude, longitude)
     {
         var markerBounds = new google.maps.LatLngBounds();
@@ -131,6 +152,9 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
         map.setZoom(16);
     }
 
+    /**
+     * Resets the zoom and map bounds to contain all displayed post offices.
+     */
     function resetZoom()
     {
         var markerBounds = new google.maps.LatLngBounds();
@@ -164,6 +188,9 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
             });
     }
 
+    /**
+     * Get the current map object
+     */
     function getMap()
     {
         return map;
