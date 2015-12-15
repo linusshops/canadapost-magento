@@ -113,13 +113,23 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
                     position: location,
                     title: office.name,
                     map: map,
-                    animation: google.maps.Animation.DROP
+                    animation: google.maps.Animation.DROP,
+                    icon: Common.getCspData('cpost_logo')
                 });
 
                 markerBounds.extend(location);
 
+                var content = '<div class="canadapost marker">' +
+                    '<span class="office-info">' +
+                    office.name +
+                    '<br/>' + office.address['office-address'] +
+                    '<br/>' + office.address.city  +
+                    ', ' + office.address['postal-code'] +
+                    '</span></div>'
+                ;
+
                 var infowindow = new google.maps.InfoWindow({
-                    content: office.name + '<br/>' + office.address['office-address'] + '<br/>' + office.address.city  + ', ' + office.address['postal-code']
+                    content: content
                 });
 
                 marker.addListener('click', function() {

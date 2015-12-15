@@ -6,3 +6,4 @@ src/app/design/frontend/base/default/template/linuscanadapost  app/design/fronte
 src/app/etc/modules/Linus_CanadaPost.xml  app/etc/modules/Linus_CanadaPost.xml
 
 src/skin/frontend/base/default/js/linuscanadapost  skin/frontend/base/default/js/linuscanadapost
+src/skin/frontend/base/default/images/linuscanadapost  skin/frontend/base/default/images/linuscanadapost
