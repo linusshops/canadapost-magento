@@ -10,6 +10,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
     var map;
 
     var markers = [];
+    var offices;
 
     function setApiKey(key)
     {
@@ -80,6 +81,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
     function displayOfficeMarkers(epicenter)
     {
         getPostOfficeData(epicenter).done(function(response){
+            offices = response.payload;
             var $mapDiv = $(map.getDiv());
 
             $mapDiv.trigger('onOfficesLoaded', [response.payload]);
@@ -117,6 +119,32 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
         });
     }
 
+    function recenterAndZoom(latitude, longitude)
+    {
+        var markerBounds = new google.maps.LatLngBounds();
+        var location = new google.maps.LatLng(
+            latitude,
+            longitude
+        );
+        markerBounds.extend(location);
+        map.fitBounds(markerBounds);
+        map.setZoom(16);
+    }
+
+    function resetZoom()
+    {
+        var markerBounds = new google.maps.LatLngBounds();
+        $.each(offices, function(index, office) {
+            var location = new google.maps.LatLng(
+                office.address.latitude,
+                office.address.longitude
+            );
+
+            markerBounds.extend(location);
+        });
+        map.fitBounds(markerBounds);
+    }
+
     /**
      * Wrap map creation (if not already created) and adding markers
      */
@@ -136,7 +164,15 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
             });
     }
 
+    function getMap()
+    {
+        return map;
+    }
+
     return {
-        render: render
+        getMap: getMap,
+        recenterAndZoom: recenterAndZoom,
+        render: render,
+        resetZoom: resetZoom
     };
 })(jQuery, linus.common);
