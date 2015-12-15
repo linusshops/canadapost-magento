@@ -8,5 +8,5 @@
  */
 ?>
 
-<input type="button" id="demo-map" value="go go go"/>
+<input type="button" id="demo-map" value="Render Map"/>
 <div id="map" style="height:500px;"></div>
