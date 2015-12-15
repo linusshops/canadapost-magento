@@ -6,8 +6,15 @@ jQuery(document).ready( function() {
         );
     });
 
-    jQuery('#map').on('onOfficeMarkerClick', function(event, id){
+    var $map = jQuery('#map');
+
+    $map.on('onOfficeMarkerClick', function(event, id){
         console.log(event);
         console.log('office id: '+id);
+    });
+
+    $map.on('onOfficesLoaded', function(event, offices){
+        console.log(event);
+        console.log(offices);
     });
 });

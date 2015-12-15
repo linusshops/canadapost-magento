@@ -81,6 +81,10 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
     function displayOfficeMarkers(epicenter)
     {
         getPostOfficeData(epicenter).done(function(response){
+            var $mapDiv = $(map.getDiv());
+
+            $mapDiv.trigger('onOfficesLoaded', [response.payload]);
+
             $.each(response.payload, function(index, office){
                 var location = new google.maps.LatLng(
                     office.address.latitude,
@@ -100,21 +104,12 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
 
                 marker.addListener('click', function() {
                     infowindow.open(map, marker);
-                    $(map.getDiv()).trigger('onOfficeMarkerClick', [office['office-id']]);
+                    $mapDiv.trigger('onOfficeMarkerClick', [office['office-id']]);
                 });
 
                 markers.push(marker);
             });
         });
-    }
-
-    function clearOfficeMarkers()
-    {
-        $.each(markers, function(index, marker){
-            marker.setMap(null);
-        });
-
-        markers.length = 0;
     }
 
     /**
