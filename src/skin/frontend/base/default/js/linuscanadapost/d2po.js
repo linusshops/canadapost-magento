@@ -119,7 +119,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
                 markerBounds.extend(location);
 
                 var infowindow = new google.maps.InfoWindow({
-                    content: office.name + '<br/>' + office.address['office-address']
+                    content: office.name + '<br/>' + office.address['office-address'] + '<br/>' + office.address.city  + ', ' + office.address['postal-code']
                 });
 
                 marker.addListener('click', function() {
