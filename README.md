@@ -4,6 +4,7 @@ Provide Canada Post helpers for Magento
 * Provides frontend helpers for creating Direct to Post Office maps with Google Maps
 
 ## Installation
+This should be installed using Composer. A magento build should also include the Magento Composer Installer. This module follows the module structure guidelines provided by Firegento, which will also make it very easy to submit to the Firegento Composer Repository.
 
 ## Usage
 * In the Magento Admin, set your Google Maps Javascript API Key, and your Canada Post keys
