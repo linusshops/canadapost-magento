@@ -1,7 +1,7 @@
 var linus = linus || {};
 linus.canadapost = linus.canadapost || {};
 
-linus.canadapost.d2po = linus.canadapost.d2po || (function($)
+linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
 {
     'use strict';
 
@@ -100,6 +100,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($)
 
                 marker.addListener('click', function() {
                     infowindow.open(map, marker);
+                    $(map.getDiv()).trigger('onOfficeMarkerClick', [office['office-id']]);
                 });
 
                 markers.push(marker);
@@ -119,8 +120,12 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($)
     /**
      * Wrap map creation (if not already created) and adding markers
      */
-    function render(apiKey, $target, epicenter)
+    function render($target, epicenter, apiKey)
     {
+        if (typeof apiKey == 'undefined' || apiKey == null) {
+           apiKey = linus.common.getCspData('gmaps_api_key');
+        }
+
         setApiKey(apiKey);
 
         $.when(createMap($target, epicenter))
@@ -130,8 +135,6 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($)
     }
 
     return {
-        displayOfficeMarkers: displayOfficeMarkers,
-        clearOfficeMarkers: clearOfficeMarkers,
         render: render
     };
-})(jQuery);
+})(jQuery, linus.common);

@@ -25,9 +25,15 @@
         <reference name="content">
             <block
                     type="core/template"
+                    name="canadapost_config"
+                    template="linuscanadapost/cspconfig.php"
+            >
+            </block>
+            <block
+                    type="core/template"
                     name="demo_maps"
                     template="linuscanadapost/dev/demo.php"
-                >
+            >
             </block>
         </reference>
     </canadapost_demo_index>
