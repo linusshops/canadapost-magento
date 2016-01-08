@@ -1,4 +1,5 @@
 <?php
+use GuzzleHttp\Exception\ClientException;
 use LinusShops\CanadaPost\Service;
 use LinusShops\CanadaPost\ServiceFactory;
 
@@ -23,14 +24,17 @@ class Linus_CanadaPost_Helper_Data extends Mage_Core_Helper_Abstract
             Mage::getStoreConfig('linus_canadapost/api/password')
         ))->getService('GetNearestPostOffice');
 
-        $response = $service
-            ->setParameter('d2po', 'true')
-            ->setParameter('postalCode', $postalCode)
-            ->setParameter('city', $city)
-            ->setParameter('province', $province)
-            ->setParameter('maximum', $max)
-            ->send()
-        ;
+        try {
+            $response = $service
+                ->setParameter('d2po', 'true')
+                ->setParameter('postalCode', $postalCode)
+                ->setParameter('city', $city)
+                ->setParameter('province', $province)
+                ->setParameter('maximum', $max)
+                ->send();
+        } catch (ClientException $e) {
+            return array();
+        }
 
         $document = new DOMDocument();
         $document->loadXML($response->getBody());
