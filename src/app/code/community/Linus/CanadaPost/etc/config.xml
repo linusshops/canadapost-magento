@@ -53,6 +53,11 @@
             <maps>
                 <key></key>
             </maps>
+            <addresscomplete>
+                <css>https://ws1.postescanada-canadapost.ca/css/addresscomplete-2.30.min.css</css>
+                <js>https://ws1.postescanada-canadapost.ca/js/addresscomplete-2.30.min.js</js>
+                <key></key>
+            </addresscomplete>
         </linus_canadapost>
     </default>
 

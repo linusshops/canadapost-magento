@@ -19,6 +19,25 @@
         </reference>
     </linus_canadapost_d2po>
 
+    <linus_canadapost_addresscomplete>
+        <reference name="root">
+            <reference name="head">
+                <action method="addItem">
+                    <type>skin_js</type>
+                    <name>js/linuscanadapost/addresscomplete.js</name>
+                </action>
+            </reference>
+        </reference>
+        <reference name="content">
+            <block
+                    type="core/template"
+                    name="canadapost_config"
+                    template="linuscanadapost/cspconfig.phtml"
+            >
+            </block>
+        </reference>
+    </linus_canadapost_addresscomplete>
+
     <canadapost_demo_index>
         <update handle="linus_canadapost_d2po"/>
         <reference name="root">
@@ -39,4 +58,27 @@
             </block>
         </reference>
     </canadapost_demo_index>
+
+    <canadapost_demo_address>
+        <update handle="linus_canadapost_addresscomplete"/>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+            <reference name="head">
+                <action method="addItem">
+                    <type>skin_js</type>
+                    <name>js/linuscanadapost/demo-address.js</name>
+                </action>
+            </reference>
+        </reference>
+        <reference name="content">
+            <block
+                    type="core/template"
+                    name="demo_address"
+                    template="linuscanadapost/dev/address.phtml"
+            >
+            </block>
+        </reference>
+    </canadapost_demo_address>
 </layout>

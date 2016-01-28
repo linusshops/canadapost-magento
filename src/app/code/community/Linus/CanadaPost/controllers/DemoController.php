@@ -22,4 +22,15 @@ class Linus_CanadaPost_DemoController extends Mage_Core_Controller_Front_Action
         $this->loadLayout();
         $this->renderLayout();
     }
+
+    function addressAction()
+    {
+        if (!Mage::getIsDeveloperMode()) {
+            $this->norouteAction();
+            return;
+        }
+
+        $this->loadLayout();
+        $this->renderLayout();
+    }
 }
