@@ -18,3 +18,12 @@ jQuery(document).ready( function() {
         console.log(offices); //An array of objects that contain office data.
     });
 });
+
+
+function demoReposition() {
+    linus.canadapost.d2po.reposition({postalCode: "K1A 0A6", city: "Ottawa", province: "ON"});
+}
+
+function demoReturnToStart() {
+    linus.canadapost.d2po.reposition({postalCode: 'H4G1J9', city: 'Montreal', province: 'QC'});
+}

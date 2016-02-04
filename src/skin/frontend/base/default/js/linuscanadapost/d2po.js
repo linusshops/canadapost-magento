@@ -1,7 +1,7 @@
 var linus = linus || {};
 linus.canadapost = linus.canadapost || {};
 
-linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
+linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
 {
     'use strict';
 
@@ -154,7 +154,6 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
         );
         markerBounds.extend(location);
         map.fitBounds(markerBounds);
-        map.setZoom(16);
     }
 
     /**
@@ -193,6 +192,31 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
             });
     }
 
+    function reposition(epicenter)
+    {
+        getPostalCodeCoordinates(epicenter.postalCode, function(results, status){
+            if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
+                clearAllMarkers();
+                map.setCenter(results[0].geometry.location);
+                displayOfficeMarkers(epicenter);
+            }
+        });
+    }
+
+    function clearAllMarkers()
+    {
+        _.forEach(markers, function(marker){
+            marker.setMap(null);
+        });
+
+        markers = [];
+    }
+
+    function panTo(epicenter)
+    {
+
+    }
+
     /**
      * Get the current map object
      */
@@ -202,9 +226,11 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
     }
 
     return {
+        clearAllMarkers: clearAllMarkers,
         getMap: getMap,
         recenterAndZoom: recenterAndZoom,
         render: render,
+        reposition: reposition,
         resetZoom: resetZoom
     };
-})(jQuery, linus.common);
+})(jQuery, lodash, linus.common);
