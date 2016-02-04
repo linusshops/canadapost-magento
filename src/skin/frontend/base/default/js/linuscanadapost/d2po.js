@@ -9,6 +9,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     var apiKey = null;
     var map;
 
+    var maxOffices = 10;
+
     var markers = [];
     var offices;
 
@@ -51,7 +53,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
      */
     function getPostOfficeData(epicenter)
     {
-        return $.ajax('/canadapost/office/nearest?postal_code='+epicenter.postalCode+'&city='+epicenter.city+'&province='+epicenter.province, {
+        return $.ajax('/canadapost/office/nearest?postal_code='+epicenter.postalCode+'&city='+epicenter.city+'&province='+epicenter.province+'&max='+maxOffices, {
             method: 'GET',
             dataType: 'json'
         });
@@ -225,12 +227,18 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         return map;
     }
 
+    function setMaxOffices(max)
+    {
+        maxOffices = max;
+    }
+
     return {
         clearAllMarkers: clearAllMarkers,
         getMap: getMap,
         recenterAndZoom: recenterAndZoom,
         render: render,
         reposition: reposition,
-        resetZoom: resetZoom
+        resetZoom: resetZoom,
+        setMaxOffices: setMaxOffices
     };
 })(jQuery, lodash, linus.common);

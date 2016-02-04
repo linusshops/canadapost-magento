@@ -1,5 +1,7 @@
 jQuery(document).ready( function() {
     jQuery('#demo-map').on('click', function (event) {
+        linus.canadapost.d2po.setMaxOffices(20);
+
         linus.canadapost.d2po.render(
             '#map', //The target div to render your map to.
             {postalCode: 'H4G1J9', city: 'Montreal', province: 'QC'} //All of these options are required.
@@ -21,9 +23,11 @@ jQuery(document).ready( function() {
 
 
 function demoReposition() {
+    linus.canadapost.d2po.setMaxOffices(5);
     linus.canadapost.d2po.reposition({postalCode: "K1A 0A6", city: "Ottawa", province: "ON"});
 }
 
 function demoReturnToStart() {
+    linus.canadapost.d2po.setMaxOffices(3);
     linus.canadapost.d2po.reposition({postalCode: 'H4G1J9', city: 'Montreal', province: 'QC'});
 }
