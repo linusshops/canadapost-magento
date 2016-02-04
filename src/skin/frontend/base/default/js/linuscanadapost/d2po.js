@@ -33,12 +33,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, Common)
         //Make sure we only load the GMaps library once.
         if (!loaded) {
             promise = $.when(
-                $.ajax({
-                    url: "https://maps.googleapis.com/maps/api/js?key=" + getApiKey(),
-                    dataType: 'script',
-                    cache: true,
-                    crossDomain: true
-                })
+                Common.lazy("https://maps.googleapis.com/maps/api/js?key=" + getApiKey(), 'script')
             ).then(function () {
                 loaded = true;
             });
