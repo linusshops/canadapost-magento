@@ -1,6 +1,6 @@
 jQuery(document).ready( function() {
     jQuery('#demo-map').on('click', function (event) {
-        linus.canadapost.d2po.setMaxOffices(20);
+        linus.canadapost.d2po.setMaxOffices(10);
 
         linus.canadapost.d2po.render(
             '#map', //The target div to render your map to.

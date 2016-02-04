@@ -81,6 +81,27 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                         map = new google.maps.Map($target[0], {
                             center: results[0].geometry.location
                         });
+
+                        map.addListener('dragend', function(){
+                            var geocoder = new google.maps.Geocoder();
+                            geocoder.geocode({'location': map.getCenter()}, function(results, status) {
+                                if (status === google.maps.GeocoderStatus.OK) {
+                                    var addressComponents = _.get(results, '0.address_components', null);
+                                    if (!_.isNull(addressComponents)) {
+                                        var newPostalCode = _.reduce(addressComponents, function(result, component){
+                                            var comp = _.get(component, 'long_name', component);
+                                            if (_.isNull(result) && Common.validatePostalCode(comp)) {
+                                                result = comp;
+                                            }
+                                            return result;
+                                        }, null);
+
+                                        clearAllMarkers();
+                                        displayOfficeMarkers({postalCode: newPostalCode});
+                                    }
+                                }
+                            });
+                        });
                     }
                 });
             });
@@ -212,11 +233,6 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         });
 
         markers = [];
-    }
-
-    function panTo(epicenter)
-    {
-
     }
 
     /**
