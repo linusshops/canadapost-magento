@@ -82,37 +82,46 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                             center: results[0].geometry.location
                         });
 
-                        map.addListener('dragend', function(){
-                            var geocoder = new google.maps.Geocoder();
-                            geocoder.geocode({'location': map.getCenter()}, function(results, status) {
-                                if (status === google.maps.GeocoderStatus.OK) {
-                                    var addressComponents = _.get(results, '0.address_components', null);
-                                    if (!_.isNull(addressComponents)) {
-                                        var newPostalCode = _.reduce(addressComponents, function(result, component){
-                                            var comp = _.get(component, 'long_name', component);
-                                            if (_.isNull(result) && Common.validatePostalCode(comp)) {
-                                                result = comp;
-                                            }
-                                            return result;
-                                        }, null);
-
-                                        clearAllMarkers();
-                                        displayOfficeMarkers({postalCode: newPostalCode});
-                                    }
-                                }
-                            });
-                        });
+                        map.addListener('dragend', onDragEnd);
                     }
                 });
             });
     }
 
+    function onDragEnd()
+    {
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'location': map.getCenter()}, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                var addressComponents = _.get(results, '0.address_components', null);
+                if (!_.isNull(addressComponents)) {
+                    var newPostalCode = _.reduce(addressComponents, function(result, component){
+                        var comp = _.get(component, 'long_name', component);
+                        if (_.isNull(result) && Common.validatePostalCode(comp)) {
+                            result = comp;
+                        }
+                        return result;
+                    }, null);
+
+                    clearAllMarkers();
+                    displayOfficeMarkers({postalCode: newPostalCode}, false);
+                }
+            }
+        });
+    }
+
     /**
      * Load the post office data from Canada Post, and inject it as map markers.
      * @param epicenter
+     * @param {boolean} recenter - if false, disables recentering on located
+     * offices. Defaults to true.
      */
-    function displayOfficeMarkers(epicenter)
+    function displayOfficeMarkers(epicenter, recenter)
     {
+        if (_.isUndefined(recenter)) {
+            recenter = true;
+        }
+
         getPostOfficeData(epicenter).done(function(response){
             offices = response.payload;
             var $mapDiv = $(map.getDiv());
@@ -158,42 +167,10 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                 markers.push(marker);
             });
 
-            map.fitBounds(markerBounds);
+            if (recenter) {
+                map.fitBounds(markerBounds);
+            }
         });
-    }
-
-    /**
-     * Zoom and center on a specific location, generally to show an office
-     * at a sane default zoom level.
-     * @param latitude
-     * @param longitude
-     */
-    function recenterAndZoom(latitude, longitude)
-    {
-        var markerBounds = new google.maps.LatLngBounds();
-        var location = new google.maps.LatLng(
-            latitude,
-            longitude
-        );
-        markerBounds.extend(location);
-        map.fitBounds(markerBounds);
-    }
-
-    /**
-     * Resets the zoom and map bounds to contain all displayed post offices.
-     */
-    function resetZoom()
-    {
-        var markerBounds = new google.maps.LatLngBounds();
-        $.each(offices, function(index, office) {
-            var location = new google.maps.LatLng(
-                office.address.latitude,
-                office.address.longitude
-            );
-
-            markerBounds.extend(location);
-        });
-        map.fitBounds(markerBounds);
     }
 
     /**
@@ -251,10 +228,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     return {
         clearAllMarkers: clearAllMarkers,
         getMap: getMap,
-        recenterAndZoom: recenterAndZoom,
         render: render,
         reposition: reposition,
-        resetZoom: resetZoom,
         setMaxOffices: setMaxOffices
     };
 })(jQuery, lodash, linus.common);
