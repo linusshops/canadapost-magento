@@ -17,3 +17,8 @@ to the page handle. See linus_canadapost.xml for an example of how to do this.
 If you have developer mode enabled, you can view a demo of the D2PO map creation
 at /canadapost/demo. It is highly recommend to examine this, as it demonstrates
 creating the maps on the frontend, as well as how to use layout xml to add D2PO to a page.
+
+## Customization
+The infowindow markup is rendered via the Common.tpl method. To modify the look
+of the infowindow, you can modify `frontend/base/default/template/tpl/linuscanadapost/mapmarker.phtml`
+in your theme.
