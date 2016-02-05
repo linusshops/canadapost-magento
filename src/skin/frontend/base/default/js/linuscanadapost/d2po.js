@@ -172,7 +172,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                 });
 
                 markerBounds.extend(location);
-                
+
                 //We could place the div with the target class directly in the
                 //info window, but this results in serious jank when the infowindow
                 //resizes itself.  Instead, the tpl is loaded when the map is loaded,
