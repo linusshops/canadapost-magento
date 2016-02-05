@@ -14,6 +14,11 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     var markers = [];
     var offices;
 
+    //Milliseconds to wait before updating office locations after dragging map.
+    var dragQueryDelay = 1500;
+    var isMapCurrentlyDragging = false;
+    var lastTimer = null;
+
     function setApiKey(key)
     {
         apiKey = key;
@@ -82,7 +87,18 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                             center: results[0].geometry.location
                         });
 
-                        map.addListener('dragend', onDragEnd);
+                        //Update drag status for use by delayed dragend event.
+                        map.addListener('dragstart', function(){
+                            isMapCurrentlyDragging = true;
+                        });
+                        map.addListener('dragend', function(){
+                            isMapCurrentlyDragging = false;
+                        });
+
+                        map.addListener('dragend', function(){
+                            clearTimeout(lastTimer);
+                            lastTimer = _.delay(onDragEnd, dragQueryDelay)
+                        });
                     }
                 });
             });
@@ -90,6 +106,13 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
 
     function onDragEnd()
     {
+        //Don't bother querying if user has resumed panning in the delay.
+        //Prevents unnecessary API queries when user is clicking and releasing
+        //to drag map view.
+        if (isMapCurrentlyDragging) {
+            return;
+        }
+
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({'location': map.getCenter()}, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
@@ -225,11 +248,17 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         maxOffices = max;
     }
 
+    function setDragQueryDelay(milliseconds)
+    {
+        dragQueryDelay = milliseconds;
+    }
+
     return {
         clearAllMarkers: clearAllMarkers,
         getMap: getMap,
         render: render,
         reposition: reposition,
+        setDragQueryDelay: setDragQueryDelay,
         setMaxOffices: setMaxOffices
     };
 })(jQuery, lodash, linus.common);
