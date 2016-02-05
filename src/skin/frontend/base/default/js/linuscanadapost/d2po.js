@@ -81,6 +81,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
      */
     function createMap($target, epicenter)
     {
+        Common.tpl('.d2po_info_window_content');
+
         return lazyLoadGoogleMapsLibrary()
             .then(function () {
                 getPostalCodeCoordinates(epicenter.postalCode, function(results, status){
@@ -170,18 +172,27 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                 });
 
                 markerBounds.extend(location);
+                
+                //We could place the div with the target class directly in the
+                //info window, but this results in serious jank when the infowindow
+                //resizes itself.  Instead, the tpl is loaded when the map is loaded,
+                //so it is already available on the page. This means we can call
+                //it in a synchronous manner into a hidden div, then extract that
+                //rendered content into the infowindow content, resulting in
+                //a jankless infowindow.
+                if (!$('#d2po_temp_info_content').length) {
+                    $('body').append('<div id="d2po_temp_info_content" class="js-hidden"><div class="d2po_info_window_content"></div></div>');
+                }
 
-                var content = '<div class="canadapost marker">' +
-                    '<span class="office-name">'+office.name + '</span>' +
-                    '<br/><span class="office-address">' + office.address['office-address']+ '</span>' +
-                    '<br/><span class="office-city">' + office.address.city+ '</span>'  +
-                    ', <span class="office-province">' + office.address.province+ '</span>'  +
-                    ' <span class="office-postal">' + office.address['postal-code']+ '</span>' +
-                    '</div>'
-                ;
+                //Copy some values to remove dashes from keys, which are
+                //problematic when templating.
+                console.log(office);
+                _.set(office, 'address.office_address', office.address['office-address']);
+                _.set(office, 'address.postal_code', office.address['postal-code']);
+                Common.tpl('.d2po_info_window_content', office);
 
                 var infowindow = new google.maps.InfoWindow({
-                    content: content
+                    content: $('#d2po_temp_info_content').html()
                 });
 
                 marker.addListener('click', function() {
@@ -190,6 +201,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                     }
 
                     infowindow.open(map, marker);
+
                     $mapDiv.trigger('onOfficeMarkerClick', [office]);
                     openedInfoWindow = infowindow;
                 });
