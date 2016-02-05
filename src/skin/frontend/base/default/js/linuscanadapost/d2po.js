@@ -251,7 +251,6 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
 
                 //Copy some values to remove dashes from keys, which are
                 //problematic when templating.
-                console.log(office);
                 _.set(office, 'address.office_address', office.address['office-address']);
                 _.set(office, 'address.postal_code', office.address['postal-code']);
                 Common.tpl('.d2po_info_window_content', office);
