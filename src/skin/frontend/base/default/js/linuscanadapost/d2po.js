@@ -12,10 +12,12 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     var maxOffices = 10;
 
     var markers = [];
+    var openedInfoWindow = null;
+
     var offices;
 
     //Milliseconds to wait before updating office locations after dragging map.
-    var dragQueryDelay = 1500;
+    var dragQueryDelay = 650;
     var isMapCurrentlyDragging = false;
     var lastTimer = null;
 
@@ -183,8 +185,13 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                 });
 
                 marker.addListener('click', function() {
+                    if (_.isObject(openedInfoWindow)) {
+                        openedInfoWindow.close();
+                    }
+
                     infowindow.open(map, marker);
                     $mapDiv.trigger('onOfficeMarkerClick', [office]);
+                    openedInfoWindow = infowindow;
                 });
 
                 markers.push(marker);
