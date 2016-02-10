@@ -79,6 +79,13 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     var dragPixelTolerance = 100;
 
     /**
+     * Map zoom level used when rendering.
+     *
+     * @type {number}
+     */
+    var mapZoomLevel = 16;
+
+    /**
      * Set a specific api key. If you have set this in the Magento admin, not
      * necessary to do it again.
      * @param key
@@ -378,7 +385,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                         bounds.extend(map.getCenter());
                         map.fitBounds(bounds);
                         google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
-                            this.setZoom(16);
+                            this.setZoom(mapZoomLevel);
                         });
                     });
                 }
@@ -452,6 +459,16 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         }
     }
 
+    /**
+     * Set the default zoom level when a map renders.
+     *
+     * @param zoomLevel
+     */
+    function setZoomLevel(zoomLevel)
+    {
+        mapZoomLevel = zoomLevel;
+    }
+
     return {
         clearAllMarkers: clearAllMarkers,
         getMap: getMap,
@@ -459,6 +476,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         reposition: reposition,
         setDragTolerance: setDragTolerance,
         setDragQueryDelay: setDragQueryDelay,
-        setMaxOffices: setMaxOffices
+        setMaxOffices: setMaxOffices,
+        setZoomLevel: setZoomLevel
     };
 })(jQuery, lodash, linus.common);
