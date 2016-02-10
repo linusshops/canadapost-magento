@@ -67,6 +67,15 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     var isMapCurrentlyDragging = false;
     var lastTimer = null;
 
+    var dragStartCenter;
+    var dragStartPoint;
+    var dragEndPoint;
+
+    /**
+     * If drag distance is less than tolerance, don't requery.
+     */
+    var dragPixelTolerance = 100;
+
     /**
      * Set a specific api key. If you have set this in the Magento admin, not
      * necessary to do it again.
@@ -154,12 +163,21 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                         //Update drag status for use by delayed dragend event.
                         map.addListener('dragstart', function(){
                             isMapCurrentlyDragging = true;
+                            dragStartCenter = map.getCenter();
+                            dragStartPoint = getPixelCoordinates(dragStartCenter);
                         });
                         map.addListener('dragend', function(){
                             isMapCurrentlyDragging = false;
+                            dragEndPoint = getPixelCoordinates(dragStartCenter);
                         });
 
                         map.addListener('dragend', function(){
+                            //Check if this can be considered a minor adjustment.
+                            //Don't send a query if so.
+                            if (isDragDistanceInTolerance()) {
+                                return;
+                            }
+
                             //If there is a delay timer running, wipe it.
                             //We've dragged somewhere else, so we don't care
                             //about the previous end.
@@ -169,6 +187,40 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                     }
                 });
             });
+    }
+
+    /**
+     * Is the distance the map was dragged within the tolerance for minor adjustments?
+     * @returns {boolean}
+     */
+    function isDragDistanceInTolerance()
+    {
+        var start = dragStartPoint;
+        var end = dragEndPoint;
+
+        //Now use math. :O (it's the distance formula)
+        var distance = Math.sqrt(
+            Math.pow((end.x - start.x), 2) + Math.pow((end.y - start.y), 2)
+        );
+
+        return distance < dragPixelTolerance;
+    }
+
+    /**
+     * Translate lati
+     * http://stackoverflow.com/questions/3410600/convert-lat-lon-to-pixels-and-back
+     * @param latLng
+     * @returns {{x: number, y: number}}
+     */
+    function getPixelCoordinates(latLng)
+    {
+        var projection = map.getProjection();
+        var bounds = map.getBounds();
+        var topRight = projection.fromLatLngToPoint(bounds.getNorthEast());
+        var bottomLeft = projection.fromLatLngToPoint(bounds.getSouthWest());
+        var scale = Math.pow(2, map.getZoom());
+        var worldPoint = projection.fromLatLngToPoint(latLng);
+        return {x: Math.floor((worldPoint.x - bottomLeft.x) * scale), y:Math.floor((worldPoint.y - topRight.y) * scale)};
     }
 
     /**
@@ -364,11 +416,17 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         dragQueryDelay = milliseconds;
     }
 
+    function setDragTolerance(pixels)
+    {
+        dragPixelTolerance = pixels;
+    }
+
     return {
         clearAllMarkers: clearAllMarkers,
         getMap: getMap,
         render: render,
         reposition: reposition,
+        setDragTolerance: setDragTolerance,
         setDragQueryDelay: setDragQueryDelay,
         setMaxOffices: setMaxOffices
     };
