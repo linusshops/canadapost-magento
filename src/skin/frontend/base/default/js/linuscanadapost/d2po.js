@@ -147,7 +147,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                 getPostalCodeCoordinates(epicenter.postalCode, function(results, status){
                     if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                         map = new google.maps.Map($target[0], {
-                            center: results[0].geometry.location
+                            center: results[0].geometry.location,
+                            mapTypeControl: false
                         });
 
                         //Update drag status for use by delayed dragend event.
@@ -246,7 +247,9 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                 //it in a synchronous manner into a hidden div, then extract that
                 //rendered content into the infowindow content, resulting in
                 //a jankless infowindow.
-                if (!$('#d2po_temp_info_content').length) {
+                var $infoContent = $('#d2po_temp_info_content');
+
+                if (!$infoContent.length) {
                     $('body').append('<div id="d2po_temp_info_content" class="js-hidden"><div class="d2po_info_window_content"></div></div>');
                 }
 
@@ -257,7 +260,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                 Common.tpl('.d2po_info_window_content', office);
 
                 var infowindow = new google.maps.InfoWindow({
-                    content: $('#d2po_temp_info_content').html()
+                    content: $infoContent.html()
                 });
 
                 marker.addListener('click', function() {
