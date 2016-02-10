@@ -39,10 +39,10 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     var maxOffices = 10;
 
     /**
-     * Contains the currently active Canada Post markers.
-     * @type {Array}
+     * Contains the current Canada Post markers.
+     * @type {Object}
      */
-    var markers = [];
+    var markers = {};
 
     /**
      * The currently opened marker window.
@@ -225,6 +225,11 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
             var markerBounds = new google.maps.LatLngBounds();
 
             $.each(response.payload, function(index, office){
+                //If the office is already on the map, don't animate again.
+                if (_.has(markers, _.get(office, 'office-id'))) {
+                    return;
+                }
+
                 var location = new google.maps.LatLng(
                     office.address.latitude,
                     office.address.longitude
@@ -274,7 +279,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                     openedInfoWindow = infowindow;
                 });
 
-                markers.push(marker);
+                markers[_.get(office, 'office-id')] = marker;
             });
 
             if (recenter) {
