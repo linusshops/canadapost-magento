@@ -4,7 +4,8 @@ jQuery(document).ready( function() {
 
         linus.canadapost.d2po.render(
             '#map', //The target div to render your map to.
-            {postalCode: 'K1A 0A6', city: 'Montreal', province: 'QC'} //All of these options are required.
+            {postalCode: 'H3V 1H6', city: 'Montreal', province: 'QC'},
+            {showMarkersOnLoad: false}
         );
     });
 

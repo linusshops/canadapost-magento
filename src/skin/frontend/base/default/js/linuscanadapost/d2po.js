@@ -188,6 +188,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                             lastTimer = _.delay(onDragEnd, dragQueryDelay)
                         });
                     }
+
+                    $target.trigger('onMapLoaded', [map]);
                 });
             });
     }
@@ -352,11 +354,15 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
      * If you simply want to move the map, reposition() is more performant. Only
      * use render when the map does not yet exist in the target.
      */
-    function render(target, epicenter, apiKey)
+    function render(target, epicenter, options)
     {
         var $target = $(target);
 
-        if (typeof apiKey == 'undefined' || apiKey == null) {
+        if (!_.isObject(options)) {
+            options = {};
+        }
+
+        if (typeof _.get(options, 'apiKey') == 'undefined' || _.get(options, 'apiKey') == null) {
            apiKey = linus.common.getCspData('gmaps_api_key');
         }
 
@@ -364,7 +370,18 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
 
         $.when(createMap($target, epicenter))
             .then(function(){
-                displayOfficeMarkers(epicenter);
+                if (_.get(options,'showMarkersOnLoad', true)) {
+                    displayOfficeMarkers(epicenter);
+                } else {
+                    $target.on('onMapLoaded', function(event, map){
+                        var bounds = new google.maps.LatLngBounds();
+                        bounds.extend(map.getCenter());
+                        map.fitBounds(bounds);
+                        google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+                            this.setZoom(16);
+                        });
+                    });
+                }
             });
     }
 
