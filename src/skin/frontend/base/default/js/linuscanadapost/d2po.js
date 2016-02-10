@@ -405,6 +405,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                 clearAllMarkers();
                 map.setCenter(results[0].geometry.location);
                 displayOfficeMarkers(epicenter);
+
+                google.maps.event.trigger(map, 'resize');
             }
         });
     }
