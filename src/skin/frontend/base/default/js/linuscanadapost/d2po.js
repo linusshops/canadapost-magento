@@ -195,8 +195,9 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                         return result;
                     }, null);
 
-                    clearAllMarkers();
-                    displayOfficeMarkers({postalCode: newPostalCode}, false);
+                    if (!_.isNull(newPostalCode)) {
+                        displayOfficeMarkers({postalCode: newPostalCode}, false);
+                    }
                 }
             }
         });

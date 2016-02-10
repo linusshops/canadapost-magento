@@ -4,7 +4,7 @@ jQuery(document).ready( function() {
 
         linus.canadapost.d2po.render(
             '#map', //The target div to render your map to.
-            {postalCode: 'H4G1J9', city: 'Montreal', province: 'QC'} //All of these options are required.
+            {postalCode: 'H3V 1H6', city: 'Montreal', province: 'QC'} //All of these options are required.
         );
     });
 
@@ -29,5 +29,5 @@ function demoReposition() {
 
 function demoReturnToStart() {
     linus.canadapost.d2po.setMaxOffices(3);
-    linus.canadapost.d2po.reposition({postalCode: 'H4G1J9', city: 'Montreal', province: 'QC'});
+    linus.canadapost.d2po.reposition({postalCode: 'H3V 1H6', city: 'Montreal', province: 'QC'});
 }
