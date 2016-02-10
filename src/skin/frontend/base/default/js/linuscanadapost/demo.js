@@ -19,6 +19,11 @@ jQuery(document).ready( function() {
         console.log(event);
         console.log(offices); //An array of objects that contain office data.
     });
+
+    $map.on('onMapDragEndGeocode', function(event, postalCode){
+        console.log(event);
+        console.log(postalCode);
+    });
 });
 
 

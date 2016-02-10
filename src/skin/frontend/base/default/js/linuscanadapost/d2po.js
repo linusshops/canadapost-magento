@@ -71,6 +71,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     var dragStartPoint;
     var dragEndPoint;
 
+    var lastPostalCode;
+
     /**
      * If drag distance is less than tolerance, don't requery.
      */
@@ -153,6 +155,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
 
         return lazyLoadGoogleMapsLibrary()
             .then(function () {
+                setLastPostalCode(epicenter.postalCode);
                 getPostalCodeCoordinates(epicenter.postalCode, function(results, status){
                     if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                         map = new google.maps.Map($target[0], {
@@ -249,6 +252,9 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                     }, null);
 
                     if (!_.isNull(newPostalCode)) {
+                        setLastPostalCode(newPostalCode);
+                        var $mapDiv = $(map.getDiv());
+                        $mapDiv.trigger('onMapDragEndGeocode', [lastPostalCode]);
                         displayOfficeMarkers({postalCode: newPostalCode}, false);
                     }
                 }
@@ -369,6 +375,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
      */
     function reposition(epicenter)
     {
+        setLastPostalCode(epicenter.postalCode);
         getPostalCodeCoordinates(epicenter.postalCode, function(results, status){
             if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                 clearAllMarkers();
@@ -419,6 +426,13 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     function setDragTolerance(pixels)
     {
         dragPixelTolerance = pixels;
+    }
+
+    function setLastPostalCode(postalCode)
+    {
+        if (!_.isNull(postalCode)) {
+            lastPostalCode = postalCode;
+        }
     }
 
     return {
