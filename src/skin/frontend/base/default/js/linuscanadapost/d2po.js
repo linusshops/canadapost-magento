@@ -178,13 +178,13 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                             dragStartCenter = map.getCenter();
                             dragStartPoint = getPixelCoordinates(dragStartCenter);
 
-                            $mapDiv.trigger('onMapDragStart');
+                            $mapDiv.trigger('onMapDragStart', [dragStartPoint]);
                         });
                         map.addListener('dragend', function(){
                             isMapCurrentlyDragging = false;
                             dragEndPoint = getPixelCoordinates(dragStartCenter);
 
-                            $mapDiv.trigger('onMapDragEnd');
+                            $mapDiv.trigger('onMapDragEnd', [dragEndPoint]);
                         });
 
                         map.addListener('dragend', function(){
