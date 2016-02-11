@@ -273,12 +273,12 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
 
                     if (!_.isNull(newPostalCode)) {
                         setLastPostalCode(newPostalCode);
-                        var $mapDiv = $(map.getDiv());
-                        $mapDiv.trigger('onMapDragEndGeocode', [lastPostalCode]);
                         displayOfficeMarkers({postalCode: newPostalCode}, false);
                     }
                 }
             }
+
+            $(map.getDiv()).trigger('onMapDragEndGeocode', [lastPostalCode]);
         });
     }
 
