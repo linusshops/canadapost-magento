@@ -414,7 +414,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         getPostalCodeCoordinates(epicenter.postalCode, function(results, status){
             if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                 clearAllMarkers();
-                map.setCenter(results[0].geometry.location);
+                map.panTo(results[0].geometry.location);
                 displayOfficeMarkers(epicenter);
 
                 google.maps.event.trigger(map, 'resize');
