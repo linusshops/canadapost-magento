@@ -76,7 +76,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     /**
      * If drag distance is less than tolerance, don't requery.
      */
-    var dragPixelTolerance = 50;
+    var dragPixelTolerance;
 
     /**
      * Set a specific api key. If you have set this in the Magento admin, not
@@ -187,6 +187,11 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                             clearTimeout(lastTimer);
                             lastTimer = _.delay(onDragEnd, dragQueryDelay)
                         });
+
+                        //Set drag tolerance if still undefined.
+                        if (_.isUndefined(dragPixelTolerance)) {
+                            resetDragTolerance();
+                        }
                     }
 
                     $target.trigger('onMapLoaded', [map]);
@@ -430,6 +435,26 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     function setDragQueryDelay(milliseconds)
     {
         dragQueryDelay = milliseconds;
+    }
+
+    /**
+     * Resets drag tolerance to the default (10% of
+     * map div width, or 50px, whichever is smaller).
+     */
+    function resetDragTolerance()
+    {
+        var tolerance = 50;
+
+        var width = $(map.getDiv()).width();
+
+        if (_.isNumber(width)) {
+            var tenPercent = width * 0.1;
+            if (tenPercent < 50) {
+                tolerance = tenPercent;
+            }
+        }
+
+        setDragTolerance(tolerance);
     }
 
     function setDragTolerance(pixels)
