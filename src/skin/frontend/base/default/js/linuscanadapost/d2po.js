@@ -76,7 +76,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     /**
      * If drag distance is less than tolerance, don't requery.
      */
-    var dragPixelTolerance = 100;
+    var dragPixelTolerance = 50;
 
     /**
      * Set a specific api key. If you have set this in the Magento admin, not
