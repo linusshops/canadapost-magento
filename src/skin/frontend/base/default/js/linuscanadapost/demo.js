@@ -11,6 +11,11 @@ jQuery(document).ready( function() {
 
     var $map = jQuery('#map');
 
+    $map.on('onMapLoaded', function(event, map){
+        console.log(event);
+        console.log(map);
+    });
+
     $map.on('onOfficeMarkerClick', function(event, office){
         console.log(event);
         console.log(office); //The office object represented by the marker. Contains all office data.
