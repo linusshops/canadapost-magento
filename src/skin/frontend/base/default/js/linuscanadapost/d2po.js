@@ -416,8 +416,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                 clearAllMarkers();
                 map.setCenter(results[0].geometry.location);
                 displayOfficeMarkers(epicenter);
-
-                google.maps.event.trigger(map, 'resize');
+                triggerResize();
             }
         });
     }
@@ -494,6 +493,19 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         mapZoomLevel = zoomLevel;
     }
 
+    /**
+     * Trigger a Map resize.
+     *
+     * This is used in cases where dimensions of the map container are unknown
+     * before load, and it renders out of view, which can cause grey zones to
+     * appear on the map. This will ensure that the map resizes to fit its
+     * container.
+     */
+    function triggerResize()
+    {
+        google.maps.event.trigger(map, 'resize');
+    }
+
     return {
         clearAllMarkers: clearAllMarkers,
         render: render,
@@ -501,6 +513,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         setDragTolerance: setDragTolerance,
         setDragQueryDelay: setDragQueryDelay,
         setMaxOffices: setMaxOffices,
-        setZoomLevel: setZoomLevel
+        setZoomLevel: setZoomLevel,
+        triggerResize: triggerResize
     };
 })(jQuery, lodash, linus.common);
