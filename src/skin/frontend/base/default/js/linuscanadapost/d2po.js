@@ -415,14 +415,6 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     }
 
     /**
-     * Get the current map object
-     */
-    function getMap()
-    {
-        return map;
-    }
-
-    /**
      * Set the maximum number of Canada Post offices to display.
      * @param {int} max
      */
@@ -454,7 +446,6 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
 
     return {
         clearAllMarkers: clearAllMarkers,
-        getMap: getMap,
         render: render,
         reposition: reposition,
         setDragTolerance: setDragTolerance,
