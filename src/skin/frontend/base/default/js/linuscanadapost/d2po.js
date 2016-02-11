@@ -170,15 +170,21 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                             mapTypeControl: false
                         });
 
+                        var $mapDiv = $(map.getDiv());
+
                         //Update drag status for use by delayed dragend event.
                         map.addListener('dragstart', function(){
                             isMapCurrentlyDragging = true;
                             dragStartCenter = map.getCenter();
                             dragStartPoint = getPixelCoordinates(dragStartCenter);
+
+                            $mapDiv.trigger('onMapDragStart');
                         });
                         map.addListener('dragend', function(){
                             isMapCurrentlyDragging = false;
                             dragEndPoint = getPixelCoordinates(dragStartCenter);
+
+                            $mapDiv.trigger('onMapDragEnd');
                         });
 
                         map.addListener('dragend', function(){
