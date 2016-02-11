@@ -79,6 +79,13 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     var dragPixelTolerance;
 
     /**
+     * Map zoom level used when rendering.
+     *
+     * @type {number}
+     */
+    var mapZoomLevel = 16;
+
+    /**
      * Set a specific api key. If you have set this in the Magento admin, not
      * necessary to do it again.
      * @param key
@@ -163,15 +170,21 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                             mapTypeControl: false
                         });
 
+                        var $mapDiv = $(map.getDiv());
+
                         //Update drag status for use by delayed dragend event.
                         map.addListener('dragstart', function(){
                             isMapCurrentlyDragging = true;
                             dragStartCenter = map.getCenter();
                             dragStartPoint = getPixelCoordinates(dragStartCenter);
+
+                            $mapDiv.trigger('onMapDragStart');
                         });
                         map.addListener('dragend', function(){
                             isMapCurrentlyDragging = false;
                             dragEndPoint = getPixelCoordinates(dragStartCenter);
+
+                            $mapDiv.trigger('onMapDragEnd');
                         });
 
                         map.addListener('dragend', function(){
@@ -383,7 +396,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                         bounds.extend(map.getCenter());
                         map.fitBounds(bounds);
                         google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
-                            this.setZoom(16);
+                            this.setZoom(mapZoomLevel);
                         });
                     });
                 }
@@ -403,6 +416,8 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                 clearAllMarkers();
                 map.setCenter(results[0].geometry.location);
                 displayOfficeMarkers(epicenter);
+
+                google.maps.event.trigger(map, 'resize');
             }
         });
     }
@@ -469,12 +484,23 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         }
     }
 
+    /**
+     * Set the default zoom level when a map renders.
+     *
+     * @param zoomLevel
+     */
+    function setZoomLevel(zoomLevel)
+    {
+        mapZoomLevel = zoomLevel;
+    }
+
     return {
         clearAllMarkers: clearAllMarkers,
         render: render,
         reposition: reposition,
         setDragTolerance: setDragTolerance,
         setDragQueryDelay: setDragQueryDelay,
-        setMaxOffices: setMaxOffices
+        setMaxOffices: setMaxOffices,
+        setZoomLevel: setZoomLevel
     };
 })(jQuery, lodash, linus.common);
