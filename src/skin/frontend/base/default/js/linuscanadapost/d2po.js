@@ -431,7 +431,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
             marker.setMap(null);
         });
 
-        markers = [];
+        markers = {};
     }
 
     /**
