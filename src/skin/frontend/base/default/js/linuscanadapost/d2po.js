@@ -453,7 +453,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
     }
 
     /**
-     * Resets drag tolerance to the default (10% of
+     * Resets drag tolerance to the default (5% of
      * map div width, or 50px, whichever is smaller).
      */
     function resetDragTolerance()
@@ -463,10 +463,12 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
         var width = $(map.getDiv()).width();
 
         if (_.isNumber(width)) {
-            var tenPercent = width * 0.1;
+            var tenPercent = width * 0.05;
             if (tenPercent < 50) {
                 tolerance = tenPercent;
             }
+
+            Common.log(tenPercent, tolerance);
         }
 
         setDragTolerance(tolerance);
@@ -474,6 +476,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
 
     function setDragTolerance(pixels)
     {
+        Common.log('Drag tolerance set to '+pixels);
         dragPixelTolerance = pixels;
     }
 
