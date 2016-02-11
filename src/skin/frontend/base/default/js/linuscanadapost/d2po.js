@@ -467,8 +467,6 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
             if (tenPercent < 50) {
                 tolerance = tenPercent;
             }
-
-            Common.log(tenPercent, tolerance);
         }
 
         setDragTolerance(tolerance);
@@ -476,7 +474,6 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
 
     function setDragTolerance(pixels)
     {
-        Common.log('Drag tolerance set to '+pixels);
         dragPixelTolerance = pixels;
     }
 
