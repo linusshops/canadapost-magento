@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <linus_common_template_index>
+    <default>
             <block type="linus_common/tpl" name="d2po_info_window_content" as="d2po_info_window_content" template="linuscanadapost/tpl/mapmarker.phtml"/>
-    </linus_common_template_index>
+    </default>
 
     <linus_canadapost_d2po>
         <reference name="root">
