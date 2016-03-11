@@ -10,6 +10,22 @@ use LinusShops\CanadaPost\ServiceFactory;
 class Linus_CanadaPost_Helper_Data extends Mage_Core_Helper_Abstract
 {
     /**
+     * Canada Post office URL template.
+     */
+    const CANADAPOST_OFFICE_URL = 'https://www.canadapost.ca/cpotools/apps/fpo/personal/findPostOfficeDetail?outletId=%s';
+
+    /**
+     * Get formatted Canada Post office URL.
+     *
+     * @param $officeId
+     * @return string
+     */
+    public function getCanadaPostOfficeUrl($officeId)
+    {
+        return sprintf(self::CANADAPOST_OFFICE_URL, $officeId);
+    }
+
+    /**
      * Get post offices near a given location.
      * @param $postalCode
      * @param $city
