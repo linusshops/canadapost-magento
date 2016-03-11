@@ -13,9 +13,9 @@
     <span class="office-city">{{data.address.city}}, </span>
     <span class="office-province">{{data.address.province}}</span>
     <span class="office-postal">{{data.address.postal_code}}</span>
-    <?php /*
-    <a class="office-info-external-url" href="<?= Mage::helper('linus_canadapost')->getCanadaPostOfficeUrl('{{data.office-id}}') ?>">
-        <?= $this->__('View details and directions') ?>
-    </a>
-    */ ?>
+    <div class="office-info">
+        <a class="office-info-external-url" href="<?= Mage::helper('linus_canadapost')->getCanadaPostOfficeUrl('{{% print(data["office-id"]) }}') ?>">
+            <?= $this->__('View details and directions') ?>
+        </a>
+    </div>
 </div>
