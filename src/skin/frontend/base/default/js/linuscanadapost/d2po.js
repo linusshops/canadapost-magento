@@ -313,12 +313,17 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
                     office.address.longitude
                 );
 
+                var image = {
+                    url: Common.getCspData('cpost_logo'),
+                    scaledSize: new google.maps.Size(48, 48)
+                };
+
                 var marker = new google.maps.Marker({
                     position: location,
                     title: office.name,
                     map: map,
                     animation: google.maps.Animation.DROP,
-                    icon: Common.getCspData('cpost_logo')
+                    icon: image
                 });
 
                 markerBounds.extend(location);
