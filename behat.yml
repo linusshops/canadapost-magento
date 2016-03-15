@@ -11,9 +11,16 @@ default:
     extensions:
         Behat\MinkExtension:
             base_url: https://develop.vagrant.dev
-            sessions:
-                headless:
-                    selenium2:
-                      wd_host: "http://localhost:8643/wd/hub"
-                full:
-                    selenium2: ~
+            browser_name: 'chrome'
+            selenium2:
+              wd_host: "http://192.168.99.100:4444/wd/hub"
+
+firefox:
+    extensions:
+        Behat\MinkExtension:
+          browser_name: 'firefox'
+
+chrome:
+    extensions:
+        Behat\MinkExtension:
+          browser_name: 'chrome'

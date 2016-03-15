@@ -1,14 +1,11 @@
 <?php
+use \LinusShops\Contexts\Web;
 
-use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Mink\Exception\ElementNotFoundException;
-use LinusShops\Prophet\Context\ProphetContext;
 
 /**
  * Defines application features from the specific context.
  */
-class CanadaPostFeatureContext extends ProphetContext implements Context, SnippetAcceptingContext
+class CanadaPostFeatureContext extends Web
 {
     /**
      * Initializes context.
@@ -35,7 +32,7 @@ class CanadaPostFeatureContext extends ProphetContext implements Context, Snippe
      */
     public function iShouldSeeTheRenderedMap()
     {
-        $this->waitForElement('.gm-style');
+        $this->waitForSelectorExistence('.gm-style');
     }
 
     /**
@@ -43,6 +40,6 @@ class CanadaPostFeatureContext extends ProphetContext implements Context, Snippe
      */
     public function iShouldSeeTheDemoRenderButton()
     {
-        $this->waitForElement('#demo-map');
+        $this->waitForSelectorExistence('#demo-map');
     }
 }
