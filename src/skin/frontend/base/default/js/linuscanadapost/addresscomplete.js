@@ -26,8 +26,8 @@ linus.canadapost.addresscomplete = (function($, Common, _)
 
     (function __init(){
         $(document).ready(function(){
-            Common.lazy(Common.getCspData('addresscomplete_style'));
-            Common.lazy(Common.getCspData('addresscomplete_script'));
+            //Common.lazy(Common.getCspData('addresscomplete_style'));
+            //Common.lazy(Common.getCspData('addresscomplete_script'));
         });
     })();
 

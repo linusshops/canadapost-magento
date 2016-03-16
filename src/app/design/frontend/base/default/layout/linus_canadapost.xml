@@ -26,6 +26,21 @@
     <linus_canadapost_addresscomplete>
         <reference name="root">
             <reference name="head">
+                <block type="core/text" name="addresscomplete.js">
+                    <action method="setText">
+                        <text>
+                            <![CDATA[<script src="https://ws1.postescanada-canadapost.ca/js/addresscomplete-2.30.min.js"></script>]]>
+                        </text>
+                    </action>
+                </block>
+                <block type="core/text" name="addresscomplete.css">
+                    <action method="setText">
+                        <text>
+                            <![CDATA[<link rel="stylesheet" type="text/css" href="https://ws1.postescanada-canadapost.ca/css/addresscomplete-2.30.min.css"/>]]>
+                        </text>
+                    </action>
+                </block>
+
                 <action method="addItem">
                     <type>skin_js</type>
                     <name>js/linuscanadapost/addresscomplete.js</name>
