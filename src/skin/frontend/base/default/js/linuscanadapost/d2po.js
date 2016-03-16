@@ -339,6 +339,7 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
 
                 if (!$infoContent.length) {
                     $('body').append('<div id="d2po_temp_info_content" class="js-hidden"><div class="d2po_info_window_content"></div></div>');
+                    $infoContent = $('#d2po_temp_info_content');
                 }
 
                 //Copy some values to remove dashes from keys, which are
