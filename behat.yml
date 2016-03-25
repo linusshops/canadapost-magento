@@ -13,7 +13,7 @@ default:
             base_url: https://develop.vagrant.dev
             browser_name: 'chrome'
             selenium2:
-              wd_host: "http://192.168.99.100:4444/wd/hub"
+              wd_host: "http://selenium.dev:4444/wd/hub"
 
 firefox:
     extensions:
