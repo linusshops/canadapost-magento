@@ -15,9 +15,9 @@
         </reference>
         <reference name="content">
             <block
-                    type="core/template"
+                    type="linus_canadapost/csp"
                     name="canadapost_config"
-                    template="linuscanadapost/cspconfig.phtml"
+                    template="linuscommon/csp.phtml"
             >
             </block>
         </reference>
