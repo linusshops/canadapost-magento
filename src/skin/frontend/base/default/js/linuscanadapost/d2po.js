@@ -133,7 +133,9 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
      */
     function getPostOfficeData(epicenter)
     {
-        return $.ajax('/canadapost/office/nearest?postal_code='+epicenter.postalCode+'&city='+epicenter.city+'&province='+epicenter.province+'&max='+maxOffices, {
+        var baseUrl = Common.getBaseUrl();
+
+        return $.ajax(baseUrl + 'canadapost/office/nearest?postal_code='+epicenter.postalCode+'&city='+epicenter.city+'&province='+epicenter.province+'&max='+maxOffices, {
             method: 'GET',
             dataType: 'json'
         });
