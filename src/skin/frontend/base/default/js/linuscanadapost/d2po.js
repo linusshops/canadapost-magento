@@ -511,7 +511,9 @@ linus.canadapost.d2po = linus.canadapost.d2po || (function($, _, Common)
      */
     function triggerResize()
     {
-        google.maps.event.trigger(map, 'resize');
+        if (!_.isUndefined(google)) {
+            google.maps.event.trigger(map, 'resize');
+        }
     }
 
     return {
